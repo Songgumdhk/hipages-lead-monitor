@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Extension Icons</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .icon-container {
+      display: inline-block;
+      margin: 20px;
+      text-align: center;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #357abd;
+    }
+    .instructions {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hipages Lead Monitor - Icon Generator</h1>
+  
+  <div class="instructions">
+    <h2>Instructions:</h2>
+    <ol>
+      <li>Click "Generate Icons" to create the icon images</li>
+      <li>Right-click each canvas and select "Save image as..."</li>
+      <li>Save as: icon16.png, icon48.png, and icon128.png respectively</li>
+      <li>Place the icons in the same folder as your extension files</li>
+    </ol>
+  </div>
+
+  <div style="text-align: center;">
+    <button onclick="generateIcons()">Generate Icons</button>
+  </div>
+
+  <div id="icons"></div>
+
+  <script>
+    function generateIcons() {
+      const sizes = [16, 48, 128];
+      const container = document.getElementById('icons');
+      container.innerHTML = '';
+
+      sizes.forEach(size => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Background gradient
+        const gradient = ctx.createLinearGradient(0, 0, size, size);
+        gradient.addColorStop(0, '#4a90e2');
+        gradient.addColorStop(1, '#357abd');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, size, size);
+
+        // White text "HL"
+        ctx.fillStyle = 'white';
+        ctx.font = `bold ${size * 0.5}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('HL', size / 2, size / 2);
+
+        // Border
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(0, 0, size, size);
+
+        const div = document.createElement('div');
+        div.className = 'icon-container';
+        div.innerHTML = `
+          <canvas id="canvas${size}" width="${size}" height="${size}"></canvas>
+          <div>icon${size}.png</div>
+        `;
+        container.appendChild(div);
+
+        const newCanvas = div.querySelector('canvas');
+        const newCtx = newCanvas.getContext('2d');
+        newCtx.drawImage(canvas, 0, 0);
+      });
+    }
+  </script>
+</body>
+</html>
+

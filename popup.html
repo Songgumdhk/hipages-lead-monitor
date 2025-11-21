@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hipages Lead Monitor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <div>
+          <h1>Hipages Lead Monitor</h1>
+          <p class="subtitle">Real-time Lead Tracking</p>
+        </div>
+        <button id="settingsBtn" class="settings-icon-btn" title="Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3m15.364 6.364l-4.243-4.243m-4.242 0L5.636 17.364m12.728 0l-4.243-4.243m-4.242 0L5.636 6.636"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="settings">Settings</button>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="dashboardTab" class="tab-content active">
+      <div class="status-section">
+        <div class="status-indicator" id="statusIndicator">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Initializing...</span>
+        </div>
+        <div class="monitoring-count" id="monitoringCount">
+          <span id="leadCount">0</span> leads found
+        </div>
+      </div>
+
+      <div class="leads-section">
+        <h2>Current Leads</h2>
+        <div id="leadsList" class="leads-list">
+          <div class="loading">Loading leads...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="settingsTab" class="tab-content">
+      <div class="controls-section">
+        <div class="control-group">
+          <label>Category Filters:</label>
+          <div id="categoryFilters" class="filters-list">
+            <!-- Filters will be added here dynamically -->
+          </div>
+          <div class="input-group" style="margin-top: 8px;">
+            <input type="text" id="newCategoryFilter" placeholder="Enter category name (e.g., Rental Bond Cleaning)" />
+            <button id="addCategoryBtn" class="btn btn-primary" style="padding: 8px 12px;">Add</button>
+          </div>
+          <p class="setting-hint">Add categories to monitor. Leads matching any category will be shown.</p>
+        </div>
+
+        <div class="control-group">
+          <label for="refreshInterval">Refresh Interval (seconds):</label>
+          <div class="input-group">
+            <input type="number" id="refreshInterval" min="3" max="300" value="5" />
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="pauseAfterClick">Pause After Click (seconds):</label>
+          <div class="input-group">
+            <input type="number" id="pauseAfterClick" min="5" max="300" value="20" />
+          </div>
+          <p class="setting-hint">Auto-refresh pauses for this duration when you click a lead</p>
+        </div>
+
+        <div class="control-group">
+          <label for="pauseMode">Multiple Clicks Behavior:</label>
+          <select id="pauseMode" class="select-input">
+            <option value="reset">Reset Timer (start fresh 20s)</option>
+            <option value="extend">Extend Timer (add 20s to remaining)</option>
+            <option value="max">Use Maximum (keep longer duration)</option>
+          </select>
+          <p class="setting-hint">What happens when you click multiple leads quickly</p>
+        </div>
+
+        <div class="control-group">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="enableSound" style="width: auto; cursor: pointer;" />
+            <span>Play beep sound for new leads</span>
+          </label>
+          <p class="setting-hint">Beep will play when a new lead with Accept button is detected</p>
+        </div>
+
+        <div class="control-group">
+          <button id="saveSettings" class="btn btn-primary" style="width: 100%;">Save Settings</button>
+        </div>
+
+        <div class="control-group">
+          <button id="pauseResumeBtn" class="btn btn-secondary">Pause</button>
+          <button id="clearIndicatorsBtn" class="btn btn-secondary">Clear "NEW" Indicators</button>
+        </div>
+
+        <div class="info-section">
+          <p class="info-text">
+            <strong>Active Categories:</strong> <span id="activeCategories">Loading...</span><br>
+            <strong>Status Filter:</strong> Waitlist or Available<br>
+            <strong>Auto-refresh:</strong> <span id="autoRefreshStatus">Enabled</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+

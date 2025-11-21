@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Hipages Lead Monitor - Rental Bond Cleaning",
+  "version": "1.0.0",
+  "description": "Monitor Hipages lead pages for Rental Bond Cleaning jobs with Waitlist or Available status. Automatically detects and highlights new leads.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://tradiecore.hipages.com.au/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://tradiecore.hipages.com.au/leads*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
+
