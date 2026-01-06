@@ -164,7 +164,8 @@
    * Get all matching leads from the page
    */
   function getMatchingLeads() {
-    const leadArticles = document.querySelectorAll('article[data-tracking-label="Lead card"]');
+    // Support both old "Lead card" and new "Lead Card" formats
+    const leadArticles = document.querySelectorAll('article[data-tracking-label="Lead card"], article[data-tracking-label="Lead Card"]');
     const matchingLeads = [];
 
     leadArticles.forEach(article => {
@@ -250,22 +251,26 @@
     leadElement.classList.add(NEW_LEAD_CLASS);
 
     // Add "NEW" badge indicator
-    const statusSection = leadElement.querySelector('section.mb-md.border-border-neutral.pb-md');
-    if (statusSection) {
+    // Try to find the section containing the status badge - support multiple possible structures
+    const statusBadge = leadElement.querySelector('span[role="status"]');
+    if (statusBadge) {
       // Check if indicator already exists
-      let indicator = statusSection.querySelector(`.${NEW_LEAD_INDICATOR_CLASS}`);
+      let indicator = leadElement.querySelector(`.${NEW_LEAD_INDICATOR_CLASS}`);
       if (!indicator) {
         indicator = document.createElement('span');
         indicator.className = NEW_LEAD_INDICATOR_CLASS;
         indicator.textContent = 'NEW';
         indicator.title = 'This is a newly detected lead';
         
-        // Insert after the status badge
-        const statusBadge = statusSection.querySelector('span[role="status"]');
-        if (statusBadge && statusBadge.parentElement) {
+        // Insert after the status badge in its parent container
+        if (statusBadge.parentElement) {
           statusBadge.parentElement.appendChild(indicator);
         } else {
-          statusSection.appendChild(indicator);
+          // Fallback: find the header section and append there
+          const headerSection = leadElement.querySelector('section.mb-md.border-border-neutral.pb-md, section.mb-md');
+          if (headerSection) {
+            headerSection.appendChild(indicator);
+          }
         }
       }
     }
@@ -461,7 +466,8 @@
     }
 
     // Find the parent article element (the lead card)
-    const leadArticle = acceptLink.closest('article[data-tracking-label="Lead card"]');
+    // Support both old "Lead card" and new "Lead Card" formats
+    const leadArticle = acceptLink.closest('article[data-tracking-label="Lead card"], article[data-tracking-label="Lead Card"]');
     if (!leadArticle) {
       console.warn(`[Hipages Monitor] Could not find lead article for ID ${leadId}`);
       return false;

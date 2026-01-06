@@ -80,7 +80,7 @@
       
       // Send settings to content script
       const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-      if (tabs[0] && tabs[0].url && tabs[0].url.includes('tradiecore.hipages.com.au')) {
+      if (tabs[0] && tabs[0].url && tabs[0].url.includes('business.hipages.com.au')) {
         chrome.tabs.sendMessage(tabs[0].id, {
           type: 'UPDATE_SETTINGS',
           settings: currentSettings
@@ -216,7 +216,7 @@
   async function loadLeads() {
     try {
       const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-      if (!tabs[0] || !tabs[0].url || !tabs[0].url.includes('tradiecore.hipages.com.au')) {
+      if (!tabs[0] || !tabs[0].url || !tabs[0].url.includes('business.hipages.com.au')) {
         leadsList.innerHTML = '<div class="error">Please navigate to a Hipages leads page first.</div>';
         return;
       }
@@ -315,7 +315,7 @@
   async function scrollToLeadOnPage(leadId) {
     try {
       const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-      if (!tabs[0] || !tabs[0].url || !tabs[0].url.includes('tradiecore.hipages.com.au')) {
+      if (!tabs[0] || !tabs[0].url || !tabs[0].url.includes('business.hipages.com.au')) {
         showNotification('Please navigate to a Hipages leads page first.', true);
         return;
       }
@@ -383,7 +383,7 @@
     updateStatus();
 
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tabs[0] && tabs[0].url && tabs[0].url.includes('tradiecore.hipages.com.au')) {
+    if (tabs[0] && tabs[0].url && tabs[0].url.includes('business.hipages.com.au')) {
       chrome.tabs.sendMessage(tabs[0].id, {
         type: currentSettings.isPaused ? 'PAUSE_MONITORING' : 'RESUME_MONITORING'
       });
@@ -443,7 +443,7 @@
    */
   clearIndicatorsBtn.addEventListener('click', async () => {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (tabs[0] && tabs[0].url && tabs[0].url.includes('tradiecore.hipages.com.au')) {
+    if (tabs[0] && tabs[0].url && tabs[0].url.includes('business.hipages.com.au')) {
       chrome.tabs.sendMessage(tabs[0].id, { type: 'CLEAR_NEW_INDICATORS' }, () => {
         showNotification('New indicators cleared!');
       });

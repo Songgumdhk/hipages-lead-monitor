@@ -8,11 +8,11 @@
     "activeTab"
   ],
   "host_permissions": [
-    "https://tradiecore.hipages.com.au/*"
+    "https://business.hipages.com.au/*"
   ],
   "content_scripts": [
     {
-      "matches": ["https://tradiecore.hipages.com.au/leads*"],
+      "matches": ["https://business.hipages.com.au/leads*"],
       "js": ["content.js"],
       "css": ["styles.css"],
       "run_at": "document_idle"
